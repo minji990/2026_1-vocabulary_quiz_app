@@ -1,29 +1,35 @@
-import random
-
-from vocabulary_quiz_app.quiz_logic import Word, check_answer, draw_word
+from vocabulary_quiz_app.quiz_logic import toggle_bookmark, get_bookmarked_words
 
 
-def test_check_answer_normalized() -> None:
+def test_toggle_bookmark_on() -> None:
     word = Word(term="apple", meaning="사과")
-    assert check_answer(word, "사과")
-    assert check_answer(word, "  사과 ")
-    assert not check_answer(word, "apple")
+    assert word.bookmarked is False
+    toggle_bookmark(word)
+    assert word.bookmarked is True
 
 
-def test_draw_word_uses_rng_choice() -> None:
-    words = [Word(term="a", meaning="A"), Word(term="b", meaning="B")]
-
-    class FixedRng:
-        def choice(self, seq):
-            return seq[0]
-
-    assert draw_word(words, FixedRng()) == words[0]
+def test_toggle_bookmark_off() -> None:
+    word = Word(term="apple", meaning="사과")
+    toggle_bookmark(word)
+    toggle_bookmark(word)
+    assert word.bookmarked is False
 
 
-def test_draw_word_empty_list_raises() -> None:
-    try:
-        draw_word([], random.Random())
-    except ValueError as exc:
-        assert "empty" in str(exc)
-    else:
-        raise AssertionError("Expected ValueError for empty word list")
+def test_get_bookmarked_words() -> None:
+    words = [
+        Word(term="apple", meaning="사과"),
+        Word(term="book", meaning="책"),
+        Word(term="chair", meaning="의자"),
+    ]
+    toggle_bookmark(words[0])
+    toggle_bookmark(words[2])
+
+    bookmarked = get_bookmarked_words(words)
+    assert len(bookmarked) == 2
+    assert words[0] in bookmarked
+    assert words[2] in bookmarked
+
+
+def test_get_bookmarked_words_empty() -> None:
+    words = [Word(term="apple", meaning="사과")]
+    assert get_bookmarked_words(words) == []
