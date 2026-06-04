@@ -1,4 +1,4 @@
-from vocabulary_quiz_app.quiz_logic import toggle_bookmark, get_bookmarked_words
+from vocabulary_quiz_app.quiz_logic import Word, toggle_bookmark, get_bookmarked_words
 
 
 def test_toggle_bookmark_on() -> None:
