@@ -29,7 +29,7 @@ class VocabularyQuizApp:
         self.word_var = tk.StringVar(value="단어를 불러오는 중...")
         self.feedback_var = tk.StringVar(value="")
         self.score_var = tk.StringVar(value="Score: 0/0")
-        self.shuffle_var = tk.StringVar(value="🔀 셔플 ON")
+        self.shuffle_var = tk.StringVar(value="셔플 ON")
 
         ttk.Label(root, text="영단어").pack(pady=(16, 4))
         ttk.Label(root, textvariable=self.word_var, font=("NanumGothic", 24)).pack()
@@ -84,7 +84,7 @@ class VocabularyQuizApp:
     def toggle_shuffle(self) -> None:
         self.shuffle_on = not self.shuffle_on
         if self.shuffle_on:
-            self.shuffle_var.set("🔀 셔플 ON")
+            self.shuffle_var.set("셔플 ON")
         else:
             self._ordered_index = 0     # OFF로 바꿀 때 인덱스 초기화
-            self.shuffle_var.set("📋 셔플 OFF")
+            self.shuffle_var.set("셔플 OFF")
