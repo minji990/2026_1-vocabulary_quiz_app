@@ -24,3 +24,11 @@ def draw_word(words: list[Word], rng: random.Random | None = None) -> Word:
         raise ValueError("Word list is empty")
     chooser = rng if rng is not None else random
     return chooser.choice(words)
+
+#퀴즈 셔플 로직 추가
+def get_shuffled_words(words: list[Word], rng: random.Random | None = None) -> list[Word]:
+    """단어 목록을 랜덤 셔플한 새 리스트 """
+    chooser = rng if rng is not None else random
+    shuffled = list(words)
+    chooser.shuffle(shuffled)
+    return shuffled
